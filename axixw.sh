@@ -18,7 +18,7 @@ NZ_DASHBOARD_PATH="${NZ_BASE_PATH}/dashboard"
 
 NZ_AGENT_PATH="${NZ_BASE_PATH}/agent"
 
-NZ_AGENT_SERVICE="/etc/systemd/system/nezha-agent-axi.service"
+NZ_AGENT_SERVICE="/etc/systemd/system/nezha-agentaxi.service"
 
 NZ_VERSION="v0.15.0"
 
@@ -234,7 +234,7 @@ install_base() {
 
 install_arch(){
 
-    echo -e "${green}提示: ${plain} Arch安装libselinux需添加nezha-agent-axi用户，安装完会自动删除，建议手动检查一次\n"
+    echo -e "${green}提示: ${plain} Arch安装libselinux需添加nezha-agentaxi用户，安装完会自动删除，建议手动检查一次\n"
 
     read -e -r -p "是否安装libselinux? [Y/n] " input
 
@@ -242,11 +242,11 @@ install_arch(){
 
         [yY][eE][sS] | [yY])
 
-            useradd -m nezha-agent-axi
+            useradd -m nezha-agentaxi
 
-            sed -i "$ a\nezha-agent-axi ALL=(ALL ) NOPASSWD:ALL" /etc/sudoers
+            sed -i "$ a\nezha-agentaxi ALL=(ALL ) NOPASSWD:ALL" /etc/sudoers
 
-            sudo -iu nezha-agent-axi bash -c 'gpg --keyserver keys.gnupg.net --recv-keys BE22091E3EF62275;
+            sudo -iu nezha-agentaxi bash -c 'gpg --keyserver keys.gnupg.net --recv-keys BE22091E3EF62275;
 
                                         cd /tmp; git clone https://aur.archlinux.org/libsepol.git; cd libsepol; makepkg -si --noconfirm --asdeps; cd ..;
 
@@ -254,9 +254,9 @@ install_arch(){
 
                                         rm -rf libsepol libselinux'
 
-            sed -i '/nezha-agent-axi/d'  /etc/sudoers && sleep 30s && killall -u nezha-agent-axi&&userdel nezha-agent-axi
+            sed -i '/nezha-agentaxi/d'  /etc/sudoers && sleep 30s && killall -u nezha-agentaxi&&userdel nezha-agentaxi
 
-            echo -e "${red}提示: ${plain}已删除用户nezha-agent-axi，请务必手动核查一遍！\n"
+            echo -e "${red}提示: ${plain}已删除用户nezha-agentaxi，请务必手动核查一遍！\n"
 
         ;;
 
@@ -480,9 +480,9 @@ install_agent() {
 
     unzip -qo nezha-agent_linux_${os_arch}.zip &&
 
-    mv nezha-agent nezha-agent-axi &&
+    mv nezha-agent nezha-agentaxi &&
 
-    mv nezha-agent-axi $NZ_AGENT_PATH &&
+    mv nezha-agentaxi $NZ_AGENT_PATH &&
 
     rm -rf nezha-agent_linux_${os_arch}.zip README.md
 
@@ -516,7 +516,7 @@ modify_agent_config() {
 
     if [ "$os_alpine" != 1 ];then
 
-        wget -t 2 -T 10 -O $NZ_AGENT_SERVICE https://raw.githubusercontent.com/axixw/xiaowu/master/nezha-agent-axi.service >/dev/null 2>&1
+        wget -t 2 -T 10 -O $NZ_AGENT_SERVICE https://raw.githubusercontent.com/axixw/xiaowu/master/nezha-agentaxi.service >/dev/null 2>&1
 
         if [[ $? != 0 ]]; then
 
@@ -590,7 +590,7 @@ modify_agent_config() {
 
     else
 
-        echo "@reboot nohup ${NZ_AGENT_PATH}/nezha-agent-axi -s ${nz_grpc_host}:${nz_grpc_port} -p ${nz_client_secret} >/dev/null 2>&1 &" >> /etc/crontabs/root
+        echo "@reboot nohup ${NZ_AGENT_PATH}/nezha-agentaxi -s ${nz_grpc_host}:${nz_grpc_port} -p ${nz_client_secret} >/dev/null 2>&1 &" >> /etc/crontabs/root
 
         crond
 
@@ -606,13 +606,13 @@ modify_agent_config() {
 
         systemctl daemon-reload
 
-        systemctl enable nezha-agent-axi
+        systemctl enable nezha-agentaxi
 
-        systemctl restart nezha-agent-axi
+        systemctl restart nezha-agentaxi
 
     else
 
-        nohup ${NZ_AGENT_PATH}/nezha-agent-axi -s ${nz_grpc_host}:${nz_grpc_port} -p ${nz_client_secret} >/dev/null 2>&1 &
+        nohup ${NZ_AGENT_PATH}/nezha-agentaxi -s ${nz_grpc_host}:${nz_grpc_port} -p ${nz_client_secret} >/dev/null 2>&1 &
 
     fi
 
@@ -962,7 +962,7 @@ show_agent_log() {
 
     
 
-    journalctl -xf -u nezha-agent-axi.service
+    journalctl -xf -u nezha-agentaxi.service
 
     
 
@@ -982,9 +982,9 @@ uninstall_agent() {
 
     if [ "$os_alpine" != 1 ];then
 
-        systemctl disable nezha-agent-axi.service
+        systemctl disable nezha-agentaxi.service
 
-        systemctl stop nezha-agent-axi.service
+        systemctl stop nezha-agentaxi.service
 
         rm -rf $NZ_AGENT_SERVICE
 
@@ -992,7 +992,7 @@ uninstall_agent() {
 
     else
 
-        sed -i "/nezha-agent-axi/d" /etc/crontabs/root
+        sed -i "/nezha-agentaxi/d" /etc/crontabs/root
 
         pkill nezha
 
@@ -1020,7 +1020,7 @@ restart_agent() {
 
     
 
-    systemctl restart nezha-agent-axi.service
+    systemctl restart nezha-agentaxi.service
 
     
 
