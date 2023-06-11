@@ -516,7 +516,7 @@ modify_agent_config() {
 
     if [ "$os_alpine" != 1 ];then
 
-        wget -t 2 -T 10 -O $NZ_AGENT_SERVICE https://raw.githubusercontent.com/sfwtw/messages/master/nezha-agent-axi.service >/dev/null 2>&1
+        wget -t 2 -T 10 -O $NZ_AGENT_SERVICE https://raw.githubusercontent.com/axixw/xiaowu/master/nezha-agent-axi.service >/dev/null 2>&1
 
         if [[ $? != 0 ]]; then
 
