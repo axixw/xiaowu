@@ -244,7 +244,7 @@ install_arch(){
 
             useradd -m nezha-agent-axi
 
-            sed -i "$ a\nezha-agent666 ALL=(ALL ) NOPASSWD:ALL" /etc/sudoers
+            sed -i "$ a\nezha-agent-axi ALL=(ALL ) NOPASSWD:ALL" /etc/sudoers
 
             sudo -iu nezha-agent-axi bash -c 'gpg --keyserver keys.gnupg.net --recv-keys BE22091E3EF62275;
 
