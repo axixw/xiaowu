@@ -120,9 +120,9 @@ echo -e "${green}开始尝试降级Agent"
         echo -e "${green}检测到系统为: ${release} 架构: ${arch} ${plain}"
 
         if [[ "${arch}" == "amd64" ]]; then
-            wget https://ghps.cc/https://github.com/nezhahq/agent/releases/download/v0.${VERSION}/nezha-agent_linux_amd64.zip && unzip nezha-agent_linux_amd64.zip && rm nezha-agent_linux_amd64.zip && mv nezha-agent /opt/nezha/agent/nezha-agentaxi
+            wget https://github.com/nezhahq/agent/releases/download/v0.${VERSION}/nezha-agent_linux_amd64.zip && unzip nezha-agent_linux_amd64.zip && rm nezha-agent_linux_amd64.zip && mv nezha-agent /opt/nezha/agent/nezha-agentaxi
         elif [[ "${arch}" == "arm64" ]]; then
-            wget https://ghps.cc/https://github.com/nezhahq/agent/releases/download/v0.${VERSION}/nezha-agent_linux_arm64.zip && unzip nezha-agent_linux_arm64.zip && rm nezha-agent_linux_arm64.zip && mv nezha-agent /opt/nezha/agent/nezha-agentaxi
+            wget https://github.com/nezhahq/agent/releases/download/v0.${VERSION}/nezha-agent_linux_arm64.zip && unzip nezha-agent_linux_arm64.zip && rm nezha-agent_linux_arm64.zip && mv nezha-agent /opt/nezha/agent/nezha-agentaxi
         fi
     else
        echo -e "${yellow}/opt/nezha/agent/nezha-agentaxi不存在,请尝试手动降级${plain}"
